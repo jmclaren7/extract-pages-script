@@ -27,5 +27,5 @@ optional arguments:
 
 ### Example:
 ```
-python extract_pages.py -i input.pdf -p 1,3-6 -o output.pdf
+$ python extract_pages.py -i input.pdf -p 1,3-6 -o output.pdf
 ```
