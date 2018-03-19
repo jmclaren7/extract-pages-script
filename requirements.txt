@@ -1,3 +1,4 @@
 pypdf2
 tqdm
 ipython
+flake8
