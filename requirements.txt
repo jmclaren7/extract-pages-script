@@ -1,4 +1,4 @@
 flake8
 ipython
-pypdf2
+pypdf
 tqdm

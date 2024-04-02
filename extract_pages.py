@@ -2,7 +2,7 @@ import argparse
 import os
 from collections import OrderedDict
 from pathlib import Path
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from pypdf import PdfWriter, PdfReader
 from tqdm import tqdm
 
 
@@ -20,14 +20,14 @@ def extract_pages(input_files, pages, output_file):
     one_file = True
     # one_file = False
     if one_file:
-        output = PdfFileWriter()
+        output = PdfWriter()
 
     for pdf_name, pdf_pages in tqdm(pdfs.items()):
         full_path = root_dir / Path(pdf_name)
 
-        inputpdf = PdfFileReader(open(full_path, 'rb'))
+        inputpdf = PdfReader(full_path)
         msg = 'specified pages range {} is out of range ({})'
-        num_pages = inputpdf.numPages
+        num_pages = len(inputpdf.pages)
         for page in pdf_pages:
             assert page <= num_pages, msg.format(pdf_name, num_pages)
 
@@ -39,11 +39,11 @@ def extract_pages(input_files, pages, output_file):
 
         if not one_file:
             tqdm.write('  Output file: {}'.format(out_name))
-            output = PdfFileWriter()
+            output = PdfWriter()
 
         for i in pdf_pages:
             tqdm.write('      Getting page {}...'.format(i))
-            output.addPage(inputpdf.getPage(i-1))
+            output.add_page(inputpdf.pages[i-1])
 
         if not one_file:
             with open(out_name, 'wb') as oStream:
